@@ -11,7 +11,7 @@ const image = require("../assets/images/mobile-ui-design.png");
 const yoga = require("../assets/images/yoga-position.png");
 const moon = require("../assets/images/moon.png");
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+export default function TabmiddleScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   const [isOn, setIsOn] = useState(false)
   const [selected, setSelected] = useState(false);
 

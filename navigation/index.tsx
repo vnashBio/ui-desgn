@@ -8,13 +8,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable, Image } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
+import TabMiddleScreen from '../screens/TabMiddleScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -39,9 +38,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -55,41 +52,75 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
+  const home = require("../assets/images/hut.png");
+  const halfmoon = require("../assets/images/halfmoon.png");
+  const user = require("../assets/images/user.png");
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarStyle: {
+          height: 70,
+          paddingHorizontal: 5,
+          paddingTop: 15,
+          backgroundColor: '#0b1b31',
+          borderTopWidth: 0,
+          justifyContent:"center",
+          alignItems:"center",
+      },
       }}>
       <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
+          title: ' ',
+          headerShown: false,
+          tabBarVisible:false, 
+          tabBarIcon: ({size,focused,color}) => {
+            return (
+              <Image
+                style={{ width: size, height: size }}
+                source={home}
               />
-            </Pressable>
-          ),
+            );
+          },
         })}
       />
+
+      <BottomTab.Screen
+        name="TabMiddle"
+        component={TabMiddleScreen}
+        options={{
+          title: ' ',
+          headerShown: false,
+          tabBarVisible:false, 
+          tabBarIcon: ({size,focused,color}) => {
+            return (
+              <Image
+                style={{ width: size, height: size }}
+                source={halfmoon}
+              />
+            );
+          },
+        }}
+      />
+
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: ' ',
+          headerShown: false,
+          tabBarVisible:false, 
+          tabBarIcon: ({size,focused,color}) => {
+            return (
+              <Image
+                style={{ width: size, height: size }}
+                source={user}
+              />
+            );
+          },
         }}
       />
     </BottomTab.Navigator>
